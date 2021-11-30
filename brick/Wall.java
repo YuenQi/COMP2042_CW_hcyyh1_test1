@@ -15,7 +15,15 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package brick;
+
+import ball.Ball;
+import ball.RubberBall;
+import brick.Brick;
+import brick.CementBrick;
+import brick.ClayBrick;
+import brick.SteelBrick;
+import player.Player;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -44,6 +52,18 @@ public class Wall {
     private int brickCount;
     private int ballCount;
     private boolean ballLost;
+
+    public Ball getBall() {
+        return ball;
+    }
+
+    public Brick[] getBricks() {
+        return bricks;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
 
     public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos){
 
@@ -78,7 +98,7 @@ public class Wall {
     private Brick[] makeSingleTypeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type){
         /*
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
-          multiple of lineCount smaller then brickCount
+          multiple of lineCount smaller than brickCount
          */
         brickCnt -= brickCnt % lineCnt;
 
@@ -118,7 +138,7 @@ public class Wall {
     private Brick[] makeChessboardLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB){
         /*
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
-          multiple of lineCount smaller then brickCount
+          multiple of lineCount smaller than brickCount
          */
         brickCnt -= brickCnt % lineCnt;
 
@@ -206,18 +226,18 @@ public class Wall {
                 //Vertical Impact
                 case Brick.UP_IMPACT:
                     ball.reverseY();
-                    return b.setImpact(ball.down, Brick.Crack.UP);
+                    return b.setImpact(ball.getDown(), Brick.Crack.UP);
                 case Brick.DOWN_IMPACT:
                     ball.reverseY();
-                    return b.setImpact(ball.up,Brick.Crack.DOWN);
+                    return b.setImpact(ball.getUp(),Brick.Crack.DOWN);
 
                 //Horizontal Impact
                 case Brick.LEFT_IMPACT:
                     ball.reverseX();
-                    return b.setImpact(ball.right,Brick.Crack.RIGHT);
+                    return b.setImpact(ball.getRight(),Brick.Crack.RIGHT);
                 case Brick.RIGHT_IMPACT:
                     ball.reverseX();
-                    return b.setImpact(ball.left,Brick.Crack.LEFT);
+                    return b.setImpact(ball.getLeft(),Brick.Crack.LEFT);
             }
         }
         return false;
